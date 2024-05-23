@@ -77,22 +77,23 @@ class DBStorage:
 
     def get(self, cls, id):
         '''method to retrieve one object with spacific id'''
-        if cls in classes.values() or cls in classes.keys():
-            if cls in classes.keys():
-                cls = classes[cls]
-            obj = self.__session.query(cls).filter_by(id=id).first()
-            return (obj)
-        return (None)
+        if isinstance(cls, str):
+            cls = classes.get(str, None)
+        if cls not in classes.values():
+            return None
+        obj = self.__session.query(cls).filter_by(id=id).first()
+        return (obj)
 
     def count(self, cls=None):
         '''method to count the number of objects in storage'''
-        cnt = 0
-        if cls and cls in classes.values() or cls in classes.keys():
-            if cls in classes.keys():
-                cls = classes[cls]
-            cnt = self.__session.query(cls).count()
+        if cls:
+            if isinstance(cls, str):
+                cls = classes.get(cls, None)
+            if cls not in classes.values():
+                return 0
+            return self.__session.query(cls).count()
         else:
             cnt = 0
             for clss in classes.values():
                 cnt += self.__session.query(clss).count()
-        return (cnt)
+            return (cnt)

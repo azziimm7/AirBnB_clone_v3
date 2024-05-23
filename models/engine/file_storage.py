@@ -71,7 +71,11 @@ class FileStorage:
 
     def get(self, cls, id):
         '''method to retrieve one object with spacific id'''
-        if cls in classes.values() or cls in classes.keys():
+        if cls:
+            if isinstance(cls, str):
+                cls = classes.get(cls, None)
+            if cls not in classes.values():
+                return None
             for obj in self.__objects.values():
                 if ((cls == obj.__class__ or cls == obj.__class__.__name__)
                         and (obj.id == id)):
@@ -82,10 +86,12 @@ class FileStorage:
         '''method to count the number of objects in storage'''
         if cls:
             cnt = 0
-            if not (cls in classes.values() or cls in classes.keys()):
-                return cnt
-            for value in self.__objects.values():
-                if cls == value.__class__ or cls == value.__class__.__name__:
+            if isinstance(cls, str):
+                cls = classes.get(cls, None)
+            if cls not in classes.values():
+                return 0
+            for obj in self.__objects.values():
+                if cls == obj.__class__ or cls == obj.__class__.__name__:
                     cnt += 1
             return cnt
         else:
