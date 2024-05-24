@@ -22,7 +22,7 @@ def get_stats():
     """retreive the number of objects y calling count"""
     if (request.method == 'GET'):
         classes = {"amenities": Amenity, "cities": City, "places": Place,
-               "reviews": Review, "states": State, "users": User}
+                   "reviews": Review, "states": State, "users": User}
         response = {}
 
         for key, value in classes.items():
