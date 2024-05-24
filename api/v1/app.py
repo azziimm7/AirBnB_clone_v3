@@ -24,6 +24,11 @@ def storageClose(exception):
     storage.close()
 
 
-if __name__ == '__main__':
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
+
+if __name__ == "__main__":
     """ start main app """
     app.run(host=host, port=port, threaded=True)
