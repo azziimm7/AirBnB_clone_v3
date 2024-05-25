@@ -35,8 +35,7 @@ def get_state_by_id(state_id):
     if state is None:
         abort(404)
 
-    if request.method == 'GET':
-        return jsonify(state.to_dict())
+    return jsonify(state.to_dict())
 
 
 @app_views.route("/states/<state_id>", methods=["DELETE"],
