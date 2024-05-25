@@ -77,7 +77,7 @@ class FileStorage:
             if cls not in classes.values():
                 return None
             for obj in self.__objects.values():
-                if ((cls == obj.__class__.__name__) and (obj.id == id)):
+                if ((cls == obj.__class__ or ls == obj.__class__.__name__) and (obj.id == id)):
                     return (obj)
         return None
 
