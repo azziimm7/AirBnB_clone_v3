@@ -26,7 +26,8 @@ def storageClose(exception):
 
 @app.errorhandler(404)
 def not_found(exception):
-     data = {
+    """ handle 404 error"""
+    data = {
         "error": "Not found"
     }
 
