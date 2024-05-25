@@ -30,7 +30,7 @@ def get_state_by_id(state_id):
     If the state_id is not linked to any State object, raise a 404 error
     """
 
-    state = storage.get(State, state_id)
+    state = storage.get('State', state_id)
 
     if state is None:
         abort(404)
@@ -47,7 +47,7 @@ def delete_state(state_id):
     If the state_id is not linked to any State object, raise a 404 error
     Returns an empty dictionary with the status code 200
     """
-    state = storage.get(State, state_id)
+    state = storage.get('State', state_id)
     storage.delete(state)
     storage.save()
     return jsonify({})
