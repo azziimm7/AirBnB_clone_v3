@@ -19,12 +19,14 @@ def get_stauts():
 
 @app_views.route('/api/v1/stats', methods=['GET'])
 def get_stats():
-    """retreive the number of objects y calling count"""
-    if (request.method == 'GET'):
-        classes = {"amenities": Amenity, "cities": City, "places": Place,
-                   "reviews": Review, "states": State, "users": User}
-        response = {}
+    """retreive the number of objects y calling"""
+    classes =  {
+        "amenities": storage.count("Amenity"),
+        "cities": storage.count("City"),
+        "places": storage.count("Place"),
+        "reviews": storage.count("Review"),
+        "states": storage.count("State"),
+        "users": storage.count("User"),
+        }
 
-        for key, value in classes.items():
-                response[value] = storage.count(key)
-        return jsonify(response)
+       return jsonify(classes)
