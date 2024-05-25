@@ -48,8 +48,8 @@ def delete_state(state_id):
     Returns an empty dictionary with the status code 200
     """
     state = storage.get(State, state_id)
-    storage.delete(state)
-    storage.save()
+    state.delete()
+    del state
     return jsonify({})
 
 
