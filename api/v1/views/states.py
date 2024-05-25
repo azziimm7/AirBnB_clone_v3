@@ -86,7 +86,7 @@ def update_state(state_id):
         abort(400, "Not a JSON")
     if state is None:
         abort(404)
-    for key, val in json.items()
+    for key, val in json.items():
         if key not in ["id", "created_at", "updated_at"]:
             setattr(state, key, val)
     state.save()
