@@ -30,7 +30,7 @@ def get_state_by_id(state_id):
     If the state_id is not linked to any State object, raise a 404 error
     """
 
-    state = storage.get(State, str(state_id))
+    state = storage.get('State', str(state_id))
 
     if state is None:
         abort(404)
@@ -46,7 +46,7 @@ def delete_state(state_id):
     If the state_id is not linked to any State object, raise a 404 error
     Returns an empty dictionary with the status code 200
     """
-    state = storage.get(State, str(state_id))
+    state = storage.get('State', str(state_id))
 
     if state is None:
         abort(404)
@@ -79,7 +79,7 @@ def update_state(state_id):
     f the state_id is not linked to any State object, raise a 404 error
     Returns the State object with the status code 200
     """
-    state = storage.get(State, str(state_id))
+    state = storage.get('State', str(state_id))
     json = request.get_json(silent=True)
     if json is None:
         abort(400, "Not a JSON")
