@@ -26,7 +26,12 @@ def storageClose(exception):
 
 @app.errorhandler(404)
 def not_found(exception):
-    return make_response(jsonify({'error': 'Not found'}), 404)
+    code = str(exception).split()[0]
+    if code == '404':
+        return make_response(jsonify({'error': "Not found"}), 404)
+    description = exception.description
+    message = {'error': description}
+    return make_response(jsonify(message), code)
 
 
 if __name__ == "__main__":
