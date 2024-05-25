@@ -10,14 +10,14 @@ from api.v1.views import app_views
 from models import storage
 
 
-@app_views.route('/status', methods=['GET'])
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
 def get_stauts():
     """ return a status of an api in json format """
     if (request.method == 'GET'):
         return jsonify({"status": "OK"}), 200
 
 
-@app_views.route('/api/v1/stats', methods=['GET'])
+@app_views.route('/api/v1/stats', methods=['GET'], strict_slashes=False)
 def get_stats():
     """retreive the number of objects y calling"""
     classes = {
