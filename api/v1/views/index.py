@@ -20,7 +20,7 @@ def get_stauts():
 @app_views.route('/api/v1/stats', methods=['GET'])
 def get_stats():
     """retreive the number of objects y calling"""
-    classes =  {
+    classes = {
         "amenities": storage.count("Amenity"),
         "cities": storage.count("City"),
         "places": storage.count("Place"),
@@ -29,4 +29,4 @@ def get_stats():
         "users": storage.count("User"),
         }
 
-       return jsonify(classes)
+    return jsonify(classes)
