@@ -6,7 +6,7 @@ default RESTFul API actions
 
 from api.v1.views import app_views, storage
 from flask import abort, jsonify, request
-from models.state import state
+from models.state import State
 
 
 @app_views.route("/states", methods=["GET"], strict_slashes=False)
@@ -47,7 +47,7 @@ def delete_state(state_id):
     If the state_id is not linked to any State object, raise a 404 error
     Returns an empty dictionary with the status code 200
     """
-    state = storage.get(State, state_id
+    state = storage.get(State, state_id)
     storage.delete(state)
     storage.save()
     return jsonify({})
