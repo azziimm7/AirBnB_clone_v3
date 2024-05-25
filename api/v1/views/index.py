@@ -14,7 +14,7 @@ from models import storage
 def get_stauts():
     """ return a status of an api in json format """
     if (request.method == 'GET'):
-        return jsonify({"status": "OK"})
+        return jsonify({"status": "OK"}), 200
 
 
 @app_views.route('/api/v1/stats', methods=['GET'])
@@ -29,4 +29,4 @@ def get_stats():
         "users": storage.count("User"),
         }
 
-    return jsonify(classes)
+    return jsonify(classes), 200
