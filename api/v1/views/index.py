@@ -13,7 +13,7 @@ from models import storage
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def get_stauts():
     """ return a status of an api in json format"""
-        return jsonify({"status": "OK"}), 200
+    return jsonify({"status": "OK"}), 200
 
 
 @app_views.route('/api/v1/stats', methods=['GET'], strict_slashes=False)
