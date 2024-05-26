@@ -8,7 +8,7 @@ from flask import abort, jsonify, request
 from api.v1.views import app_views, storage
 from models.city import City
 from models.state import State
-
+from models import classes
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
@@ -77,6 +77,7 @@ def create_city(state_id):
     if json_city.get('name') is None:
         abort(400, "Missing name")
 
+    City = classes.get("City")
     json_city['state_id'] = state_id
     city = City(**json_city)
     city.save()
