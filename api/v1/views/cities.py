@@ -18,14 +18,13 @@ def get_city(state_id):
     given by state id
     """
     cities_list = []
-    cities_dict = storage.all(City)
+
     state = storage.get(State, str(state_id))
     if state is None:
         abort(404)
 
-    for city in cities_dict.values():
-            if city.state_id == state_id:
-                cities_list.append(city.to_dict())
+    for city in state.cities:
+        cities_list.append(city.to_dict())
 
     return jsonify(cities_list), 200
 
