@@ -4,8 +4,8 @@ Script for city view of
 the airbnb api
 """
 
-from flask import abort, jsonify, request
 from api.v1.views import app_views, storage
+from flask import abort, jsonify, request
 from models.city import City
 from models.state import State
 
