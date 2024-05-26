@@ -27,7 +27,7 @@ def get_city(state_id):
             if city.state_id == state_id:
                 cities_list.append(city.to_dict())
 
-    return jsonify(cities_list)
+    return jsonify(cities_list), 200
 
 
 @app_views.route('cities/<city_id>', methods=['GET'],
@@ -41,7 +41,7 @@ def get_city_by_id(city_id):
     if city is None:
         abort(404)
 
-    return jsonify(city.to_dict())
+    return jsonify(city.to_dict()), 200
 
 
 @app_views.route('cities/<city_id>', methods=['DELETE'],
@@ -57,7 +57,7 @@ def delete_city(city_id):
     storage.delet(city)
     storage.save()
 
-    return jsnoify({})
+    return jsnoify({}), 200
 
 
 @app_views.route('states/<state_id>/cities', methods=['POST'],
@@ -72,7 +72,7 @@ def create_city(state_id):
         abort(404)
 
     if json_city is None:
-        abort(404)
+        abort(404, "Not a JSON")
 
     if json_city.get('name') is None:
         abort(400, "Missing name")
@@ -92,13 +92,13 @@ def update_city(city_id):
     json = request.get_json(silent=True)
     city = storage.get(City, str(city_id))
     if city is None:
-        abort(404, 'Not a JSON')
+        abort(404)
 
     if json is None:
-        abort(404)
+        abort(404," Not a JSON")
 
     for key, val in json.items():
         if key not in ["id", "created_at", "updated_at"]:
             setattr(city, key, val)
     city.save()
-    return jsonify(city.to_dict())
+    return jsonify(city.to_dict()), 200
