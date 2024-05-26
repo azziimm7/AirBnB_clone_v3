@@ -90,7 +90,7 @@ def update_city(city_id):
     json = request.get_json(silent=True)
     city = storage.get(City, str(city_id))
     if city is None:
-        abort(404)
+        abort(404, 'Not a JSON')
 
     if json is None:
         abort(404)
