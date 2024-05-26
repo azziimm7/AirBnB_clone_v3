@@ -60,7 +60,7 @@ def delete_city(city_id):
     return jsonify({}), 200
 
 
-@app_views.route('states/<state_id>/cities', methods=['POST'],
+@app_views.route('/states/<state_id>/cities', methods=['POST'],
                  strict_slashes=False)
 def create_city(state_id):
     """
@@ -77,7 +77,7 @@ def create_city(state_id):
     if json_city.get('name') is None:
         abort(400, "Missing name")
 
-    json_city['state_id'] = state_id
+    json_city["state_id"] = state_id
     city = City(**json_city)
     city.save()
     return jsonify(city.to_dict()), 201
