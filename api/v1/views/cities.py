@@ -7,7 +7,7 @@ the airbnb api
 from flask import abort, jsonify, request
 from api.v1.views import app_views, storage
 from models.city import City
-
+from models.state import State
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
@@ -18,7 +18,7 @@ def get_city(state_id):
     """
     cities_list = []
 
-    state = storage.get(State, str(state_id))
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
 
@@ -48,7 +48,7 @@ def delete_city(city_id):
     """
     Deletes city object given by city id
     """
-    city = storage.get(City, str(city_id))
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
 
@@ -65,7 +65,7 @@ def create_city(state_id):
     Creates a state to a state by state id
     """
     json_city = request.get_json(silent=True)
-    state = storage.get(State, str(state_id))
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
 
@@ -88,7 +88,7 @@ def update_city(city_id):
     ubdate a city object given by id
     """
     json = request.get_json(silent=True)
-    city = storage.get(City, str(city_id))
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
 
