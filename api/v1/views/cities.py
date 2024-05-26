@@ -94,7 +94,7 @@ def update_city(city_id):
         abort(404)
 
     if json is None:
-        abort(404, " Not a JSON")
+        abort(404, "Not a JSON")
 
     for key, val in json.items():
         if key not in ["id", "created_at", "updated_at"]:
