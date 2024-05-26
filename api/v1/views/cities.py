@@ -36,7 +36,7 @@ def get_city_by_id(city_id):
     """
     Retrieves a City object by city id
     """
-    city = storage.get(City, city_id)
+    city = storage.get("City", str(city_id))
 
     if city is None:
         abort(404)
