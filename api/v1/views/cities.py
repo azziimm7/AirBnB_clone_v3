@@ -30,7 +30,7 @@ def get_city(state_id):
     return jsonify(cities_list), 200
 
 
-@app_views.route('cities/<city_id>', methods=['GET'],
+@app_views.route('/cities/<city_id>', methods=['GET'],
                  strict_slashes=False)
 def get_city_by_id(city_id):
     """
@@ -44,7 +44,7 @@ def get_city_by_id(city_id):
     return jsonify(city.to_dict()), 200
 
 
-@app_views.route('cities/<city_id>', methods=['DELETE'],
+@app_views.route('/cities/<city_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_city(city_id):
     """
