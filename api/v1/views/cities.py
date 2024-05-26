@@ -18,25 +18,24 @@ def get_city(state_id):
     given by state id
     """
     cities_list = []
-    cities_dict = storage.all(City)
-    state = storage.get(State, str(state_id))
+
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
 
-    for city in cities_dict.values():
-            if city.state_id == state_id:
-                cities_list.append(city.to_dict())
+    for city in state.cities:
+        cities_list.append(city.to_dict())
 
     return jsonify(cities_list), 200
 
 
-@app_views.route('cities/<city_id>', methods=['GET'],
+@app_views.route('/cities/<city_id>', methods=['GET'],
                  strict_slashes=False)
 def get_city_by_id(city_id):
     """
     Retrieves a City object by city id
     """
-    city = storage.get(City, str(city_id))
+    city = storage.get(City, city_id)
 
     if city is None:
         abort(404)
@@ -44,13 +43,13 @@ def get_city_by_id(city_id):
     return jsonify(city.to_dict()), 200
 
 
-@app_views.route('cities/<city_id>', methods=['DELETE'],
+@app_views.route('/cities/<city_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_city(city_id):
     """
     Deletes city object given by city id
     """
-    city = storage.get(City, str(city_id))
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
 
@@ -60,14 +59,14 @@ def delete_city(city_id):
     return jsonify({}), 200
 
 
-@app_views.route('states/<state_id>/cities', methods=['POST'],
+@app_views.route('/states/<state_id>/cities', methods=['POST'],
                  strict_slashes=False)
 def create_city(state_id):
     """
     Creates a state to a state by state id
     """
     json_city = request.get_json(silent=True)
-    state = storage.get(State, str(state_id))
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
 
@@ -77,7 +76,7 @@ def create_city(state_id):
     if json_city.get('name') is None:
         abort(400, "Missing name")
 
-    json_city['state_id'] = state_id
+    json_city["state_id"] = state_id
     city = City(**json_city)
     city.save()
     return jsonify(city.to_dict()), 201
@@ -90,7 +89,7 @@ def update_city(city_id):
     ubdate a city object given by id
     """
     json = request.get_json(silent=True)
-    city = storage.get(City, str(city_id))
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
 
