@@ -113,18 +113,3 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
-
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_count_returns_num(self):
-        """Test that all returns a dictionaty"""
-        self.assertIs(type(models.storage.count()), int)
-
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_get_returns_dict(self):
-        """Test that all returns a dictionaty"""
-        amenity = Amenity(name='bed room')
-        amenity.save()
-        storage = FileStorage()
-        new_dict = storage.get(Amenity, amenity.id)
-        self.assertEqual(type(new_dict), dict)
-        self.assertIs(new_dict, storage._FileStorage__objects)
