@@ -110,6 +110,7 @@ def create_place(city_id):
     if json.get('name') is None:
         abort(400, "Missing name")
 
+    json['city_id'] = city_id
     place = Place(**json)
     place.save()
 
