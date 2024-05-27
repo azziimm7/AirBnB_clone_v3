@@ -57,7 +57,7 @@ def delete_user_by_id(user_id):
     if user is None:
         abort(404)
 
-    storage.delete(User, user_id)
+    user.delete()
     storage.save()
 
     return jsonify({}), 200
@@ -77,8 +77,10 @@ def create_user():
     json = request.get_json(silent=True)
     if json is None:
         abort(400, "Not a JSON")
-    if json.get('name') is None:
-        abort(400, "Missing name")
+    if json.get('email') is None:
+        abort(400, "Missing email")
+    if json.get('password') is None:
+        abort(400, "Missing password")
     user = User(**json)
     user.save()
 
