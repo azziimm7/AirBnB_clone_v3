@@ -16,7 +16,7 @@ def amenity_place_id(place_id):
     """
     Retrieves the list of all Amenity objects of a Place
     """
-    place = storage.get(Place, place_id)
+    place = storage.get(Place, str(place_id))
     if place is None:
         abort(404)
 
@@ -37,8 +37,8 @@ def amenity_id_place_id(place_id, amenity_id):
     If the Amenity is not linked to the Place before raise a 404 error
     Returns an empty dictionary with the status code 200
     """
-    amenity = storage.get(Amenity, amenity_id)
-    place = storage.get(Place, place_id)
+    amenity = storage.get(Amenity, str(amenity_id))
+    place = storage.get(Place, str(place_id))
 
     if amenity is None:
         abort(404)
@@ -64,8 +64,8 @@ def post_amenity_id_place_id(amenity_id, place_id):
     """
     Link a Amenity object to a Place
     """
-    place = storage.get(Place, place_id)
-    amenity = storage.get(Amenity, amenity_id)
+    place = storage.get(Place, str(place_id))
+    amenity = storage.get(Amenity, str(amenity_id))
 
     if place is None:
         abort(404)
