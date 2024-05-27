@@ -1,7 +1,10 @@
 #!/usr/bin/python3
 """
-sk route that returns json status response
+flassk route that returns json status response
+for link betwwen amity and place
 """
+
+
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models import storage, classes
