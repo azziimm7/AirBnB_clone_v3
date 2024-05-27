@@ -4,7 +4,7 @@ A view for the link between Place objects and Amenity
 objects that handles all default RESTFul API actions
 """
 from flask import jsonify, abort
-from app.v1.views import app_views, storage
+from api.v1.views import app_views, storage
 from os import getenv
 from models.place import Place
 from models.amenity import Amenity
