@@ -1,4 +1,10 @@
 #!/usr/bin/python3
+"""
+A view for the link between Place objects and Amenity
+objects that handles all default RESTFul API actions
+"""
+
+
 from models import storage, storage_t
 from flask import jsonify, request, abort
 from api.v1.views import app_views
