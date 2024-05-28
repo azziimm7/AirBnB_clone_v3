@@ -78,7 +78,8 @@ def post_amenity(place_id, amenity_id):
         abort(404)
     if amenity_obj is None:
         abort(404)
-    if amenity_obj in place_obj.amenities:
+    if (amenity_obj in place_obj.amenities or
+            amenity_obj.id in place_obj.amenities):
         return jsonify(amenity_obj.to_dict()), 200
 
     if getenv("HBNB_TYPE_STORAGE") == "db":
