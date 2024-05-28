@@ -29,3 +29,19 @@ def get_amenity_place_id(place_id):
         amenity_list.append(obj.to_dict())
 
     return jsonify(amenity_list)
+
+@app_views.route('/places/<place_id>/amenities/<amenity_id>',
+                 methods=['DELETE'],
+                 strict_slashes=False)
+def delete_amenity(place_id, amenity_id):
+    """
+    delete amenity linked to place
+    if DBStorage: list, create and delete Amenity objects
+    from amenities relationship
+    FileStorage: list, add and remove Amenity ID in
+    the list amenity_ids of a Place object
+    """
+    place_obj = storage.get(Place, str(place_id))
+    amenity_obj = storage.get(Amenity, str(amenity_id))
+
+    return jsonify({})
