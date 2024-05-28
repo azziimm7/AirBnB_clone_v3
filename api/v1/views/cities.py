@@ -71,7 +71,7 @@ def create_city(state_id):
         abort(404)
 
     if json_city is None:
-        abort(404, "Not a JSON")
+        abort(400, "Not a JSON")
 
     if json_city.get('name') is None:
         abort(400, "Missing name")
@@ -94,7 +94,7 @@ def update_city(city_id):
         abort(404)
 
     if json is None:
-        abort(404, "Not a JSON")
+        abort(400, "Not a JSON")
 
     for key, val in json.items():
         if key not in ["id", "state_id", "created_at", "updated_at"]:
