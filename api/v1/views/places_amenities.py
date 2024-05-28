@@ -44,4 +44,8 @@ def delete_amenity(place_id, amenity_id):
     place_obj = storage.get(Place, str(place_id))
     amenity_obj = storage.get(Amenity, str(amenity_id))
 
+    if place_obj is None:
+        abort(404)
+    if amenity_obj is None:
+        abort(404)
     return jsonify({})
