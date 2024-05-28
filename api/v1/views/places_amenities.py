@@ -50,7 +50,7 @@ def delete_amenity(place_id, amenity_id):
     if amenity_obj is None:
         abort(404)
     if (amenity_obj not in place_obj.amenities and
-        amenity_obj.id not in place_obj.amenities):
+            amenity_id not in place_obj.amenity_ids):
         abort(404, 'Not found')
 
     return jsonify({})
