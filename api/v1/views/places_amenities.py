@@ -11,7 +11,7 @@ from models.place import Place
 from models.amenity import Amenity
 
 
-@app_views.ruote('/places/<place_id>/amenities', methods=['GET'],
+@app_views.route('/places/<place_id>/amenities', methods=['GET'],
                  strict_slashes=False)
 def get_amenity_place_id(place_id):
     """
