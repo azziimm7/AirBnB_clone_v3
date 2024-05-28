@@ -10,7 +10,6 @@ from api.v1.views import app_views, storage
 from models.place import Place
 from models.amenity import Amenity
 from os import getenv
-from models import storage_t
 
 
 @app_views.route('/places/<place_id>/amenities', methods=['GET'],
