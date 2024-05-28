@@ -42,10 +42,10 @@ def delete_amenity(place_id, amenity_id):
     FileStorage: list, add and remove Amenity ID in
     the list amenity_ids of a Place object
     """
-    place = storage.get(Place, str(place_id))
-    amenity = storage.get(Amenity, str(amenity_id))
+    place_obj = storage.get(Place, str(place_id))
+    amenity_obj = storage.get(Amenity, str(amenity_id))
 
-    if place or amenity is None:
+    if place_obj or amenity_obj is None:
         abort(404)
 
     amenity_ids_list = [amenity.id for amenity in place.amenities]
@@ -54,8 +54,8 @@ def delete_amenity(place_id, amenity_id):
         abort(404)
 
     if storage_t == "db":
-        place.amenities.remove(amenity)
+        place_obj.amenities.remove(amenity)
     else:
-        place.amenity_ids.pop(amenity.id)
-    place.save()
+        place_obj.amenity_ids.pop(amenity.id)
+    place_obj.save()
     return jsonify({}), 200
