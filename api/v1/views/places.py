@@ -151,20 +151,20 @@ def update_place(place_id):
 
 
 @app_views.route("/places_search", methods=['POST'])
-def search_places():
-    """Search for places based on the request body"""
+def search():
+    """handle the search for the api"""
     json = request.get_json(silent=True)
     if json is None:
         abort(400, "Not a JSON")
 
-    places = [p for p in storage.all(Place).values()]
+    places_obj = [p for p in storage.all(Place).values()]
     states_ids = json.get('states', None)
     cities_ids = json.get('cities', None)
     amenities_ids = json.get('amenities', None)
 
     if states_ids and len(states_ids) > 0:
-        cities = storage.all(City)
-        state_cities = set([city.id for city in cities.values()
+        cities_obj = storage.all(City)
+        state_cities = set([city.id for city in cities_obj.values()
                             if city.state_id in states_ids])
     else:
         state_cities = set()
@@ -177,12 +177,12 @@ def search_places():
     if len(state_cities) > 0:
         places = [p for p in places if p.city_id in state_cities]
 
-    result = []
+    search_result = []
     if amenities_ids and len(amenities_ids) > 0:
         amenities_ids = set([a_id for a_id in amenities_ids
                              if storage.get(Amenity, a_id)])
 
-        for place in places:
+        for place in places_obj:
             a_ids = None
             if storage_t == "db" and place.amenities:
                 a_ids = [a.id for a in place.amenities]
@@ -190,8 +190,8 @@ def search_places():
             elif len(place.amenities) > 0:
                 a_ids = p.amenity_ids
             if a_ids and all([a_id in a_ids for a_id in amenities_ids]):
-                result.append(place.to_dict())
+                search_result.append(place.to_dict())
     else:
-        result = [p.to_dict() for p in places]
+        search_result = [p.to_dict() for p in places.obj]
 
-    return jsonify(result)
+    return jsonify(search_result)
