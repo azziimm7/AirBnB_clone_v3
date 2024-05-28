@@ -49,8 +49,18 @@ def delete_amenity(place_id, amenity_id):
         abort(404)
     if amenity_obj is None:
         abort(404)
-    if (amenity_obj not in place_obj.amenities and
-            amenity_id not in place_obj.amenity_ids):
-        abort(404, 'Not found')
+
+    a_exist = 0
+    for obj in place_obj.amenities:
+        if str(obj_id) == amenity_id:
+            if getenv("HBNB_TYPE_STORAGE") == "db":
+                place_obj.amenities.remove(obj)
+            else:
+                place_obj.amenity_ids.remove(obj.id)
+            place_obj.save()
+            a_exit = 1
+            break
+    if a_exist == 0:
+        abort(404)
 
     return jsonify({})
