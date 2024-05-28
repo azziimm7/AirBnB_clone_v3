@@ -10,6 +10,7 @@ from api.v1.views import app_views, storage
 from models.place import Place
 from models.amenity import Amenity
 from os import getenv
+from models import storage_t
 
 
 @app_views.route('/places/<place_id>/amenities', methods=['GET'],
@@ -52,7 +53,7 @@ def delete_amenity(place_id, amenity_id):
     if amenity_id not in amenity_ids_list:
         abort(404)
 
-    if getenv("HBNB_TYPE_STORAGE") == "db":
+    if storage_t == "db":
         place.amenities.remove(amenity)
     else:
         place.amenity_ids.pop(amenity.id)
