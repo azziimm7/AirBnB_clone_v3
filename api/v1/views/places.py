@@ -157,7 +157,7 @@ def search():
     if json is None:
         abort(400, "Not a JSON")
 
-    places_obj = [p for p in storage.all(Place).values()]
+    places_obj = [plac for plac in storage.all(Place).values()]
     states_ids = json.get('states', None)
     cities_ids = json.get('cities', None)
     amenities_ids = json.get('amenities', None)
@@ -175,7 +175,7 @@ def search():
         state_cities = state_cities.union(cities_ids)
 
     if len(state_cities) > 0:
-        places = [p for p in places if p.city_id in state_cities]
+        places_obj = [plac for plac in places if p.city_id in state_cities]
 
     search_result = []
     if amenities_ids and len(amenities_ids) > 0:
