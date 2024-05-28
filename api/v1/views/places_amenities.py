@@ -63,4 +63,27 @@ def delete_amenity(place_id, amenity_id):
     if a_exist == 0:
         abort(404)
 
-    return jsonify({})
+    return jsonify({}), 200
+
+
+@app_views.route('/places/<place_id>/amenities/<amenity_id>',
+                 methods=['POST'], strict_slashes=False)
+def post_amenity(place_id, amenity_id):
+    """
+    links an amenity obbj to place
+    """
+    place_obj = storage.get(Place, str(place_id))
+    amenity_obj = storage.get(Amenity, str(amenity_id))
+
+    if place_obj is None:
+        abort(404)
+    if amenity_obj is None:
+        abort(404)
+    if amenity_obj in place_obj.amenities:
+        return jsonify(amenity_obj.to_dict()), 200
+
+    if getenv("HBNB_TYPE_STORAGE") == "db":
+        place_obj.amenities.append(amenity_obj)
+    else:
+        place_obj.amenities = amenity_obj
+    return jsonify(amenity_obj.to_dict()), 201
