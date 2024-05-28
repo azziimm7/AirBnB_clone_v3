@@ -48,7 +48,7 @@ def delete_amenity(place_id, amenity_id):
     if place_obj or amenity_obj is None:
         abort(404)
 
-    amenity_ids_list = [amenity.id for amenity in place.amenities]
+    amenity_ids_list = [amenity.id for amenity in place_obj.amenities]
 
     if amenity_id not in amenity_ids_list:
         abort(404)
