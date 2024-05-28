@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """
 A script for airbnb api file
+links between state and city
+and place and amenity
 """
 
 
