@@ -57,4 +57,4 @@ def delete_amenity(place_id, amenity_id):
     else:
         place.amenity_ids.pop(amenity.id)
     place.save()
-    return jsonify({})
+    return jsonify({}), 200
