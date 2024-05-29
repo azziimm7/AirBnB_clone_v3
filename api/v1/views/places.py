@@ -189,7 +189,7 @@ def search():
     final_places = []
     if amenities_ids:
         for place in all_places:
-            place_amenities_ids = {amenity.id for amenity in place.amenities}
+            place_amenities_ids = [amenity.id for amenity in place.amenities]
             if all(am_id in place_amenities_ids for am_id in amenities_ids):
                 final_places.append(place.to_dict())
     else:
