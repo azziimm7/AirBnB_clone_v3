@@ -177,7 +177,7 @@ def search():
         city = storage.get(City, id)
         for place in city.places:
             all_places.append(place)
-    if cities is None:
+    if len(cities) == 0:
         all_places = places_obj
 
     final_places = []
@@ -188,6 +188,6 @@ def search():
                     final_places.append(place.to_dict())
                     break
     else:
-        final_places = all_places
+        final_places = [plac.to_dic() for plac in all_places]
 
     return jsonify(final_places)
