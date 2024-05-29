@@ -175,7 +175,7 @@ def search():
         state_cities = state_cities.union(cities_ids)
 
     if len(state_cities) > 0:
-        places_obj = [plac for plac in places if p.city_id in state_cities]
+        places_obj = [plac for plac in places_obj if plac.city_id in state_cities]
 
     search_result = []
     if amenities_ids and len(amenities_ids) > 0:
@@ -188,10 +188,10 @@ def search():
                 a_ids = [a.id for a in place.amenities]
                 del place.amenities
             elif len(place.amenities) > 0:
-                a_ids = p.amenity_ids
+                a_ids = place.amenity_ids
             if a_ids and all([a_id in a_ids for a_id in amenities_ids]):
                 search_result.append(place.to_dict())
     else:
-        search_result = [p.to_dict() for p in places.obj]
+        search_result = [p.to_dict() for p in places_obj.obj]
 
     return jsonify(search_result)
