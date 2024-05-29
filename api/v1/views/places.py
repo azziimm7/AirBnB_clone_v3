@@ -157,46 +157,37 @@ def search():
     if json is None:
         abort(400, "Not a JSON")
 
-    places_obj = [plac.to_dict() for plac in storage.all(Place).values()]
+    places_obj = [plac for plac in storage.all(Place).values()]
     states_ids = json.get('states', None)
     cities_ids = json.get('cities', None)
     amenities_ids = json.get('amenities', None)
 
-    if len(json) == 0 or (len(states_ids) == 0 and len(cities_ids) == 0 and
-                          len(amenities_ids) == 0):
-        return jsonify(places_obj)
-
-
+    cities = []
     if states_ids and len(states_ids) > 0:
         cities_obj = storage.all(City)
-        state_cities = set([city.id for city in cities_obj.values()
-                            if city.state_id in states_ids])
-    else:
-        state_cities = set()
+        state_cities = [city.id for city in cities_obj.values()
+                        if city.state_id in states_ids]
+        cities.extend(state_cities)
 
     if cities_ids and len(cities_ids) > 0:
-        cities_ids = set([c_id for c_id in cities_ids
-                          if storage.get(City, c_id)])
-        state_cities = state_cities.union(cities_ids)
+        cities.extend(cities_ids)
 
-    if len(state_cities) > 0:
-        places_obj = [plac for plac in places_obj if plac.city_id in state_cities]
+    all_places = []
+    for id in cities:
+        city = storage.get(City, id)
+        for place in city.places:
+            all_places.append(place)
+    if cities is None:
+        all_places = places_obj
 
-    search_result = []
+    final_places = []
     if amenities_ids and len(amenities_ids) > 0:
-        amenities_ids = set([a_id for a_id in amenities_ids
-                             if storage.get(Amenity, a_id)])
-
-        for place in places_obj:
-            a_ids = None
-            if storage_t == "db" and place.amenities:
-                a_ids = [a.id for a in place.amenities]
-                del place.amenities
-            elif len(place.amenities) > 0:
-                a_ids = place.amenity_ids
-            if a_ids and all([a_id in a_ids for a_id in amenities_ids]):
-                search_result.append(place.to_dict())
+        for place in all_places:
+            for amnity in place.amenities:
+                if amnity.id in amenities_ids:
+                    final_places.append(place.to_dict())
+                    break
     else:
-        search_result = [p.to_dict() for p in places_obj.obj]
+        final_places = all_places
 
-    return jsonify(search_result)
+    return jsonify(final_places)
