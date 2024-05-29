@@ -157,10 +157,15 @@ def search():
     if json is None:
         abort(400, "Not a JSON")
 
-    places_obj = [plac for plac in storage.all(Place).values()]
+    places_obj = [plac.to_dict() for plac in storage.all(Place).values()]
     states_ids = json.get('states', None)
     cities_ids = json.get('cities', None)
     amenities_ids = json.get('amenities', None)
+
+    if len(json) == 0 or (len(states_ids) == 0 and len(cities_ids) == 0 and
+                          len(amenities_ids) == 0):
+        return jsonify(places_obj)
+
 
     if states_ids and len(states_ids) > 0:
         cities_obj = storage.all(City)
