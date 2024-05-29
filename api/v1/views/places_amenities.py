@@ -51,7 +51,7 @@ def delete_amenity(place_id, amenity_id):
 
     a_exist = 0
     for obj in place_obj.amenities:
-        if str(obj_id) == amenity_id:
+        if str(obj.id) == amenity_id:
             if getenv("HBNB_TYPE_STORAGE") == "db":
                 place_obj.amenities.remove(obj)
             else:
